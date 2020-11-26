@@ -1,8 +1,9 @@
 package main
 
 import (
-	u "Golang-HTMLTOPDF-Converter/pdfGenerator"
 	"fmt"
+
+	u "github.com/c-seeger/Golang-HTMLTOPDF-Converter"
 )
 
 func main() {
