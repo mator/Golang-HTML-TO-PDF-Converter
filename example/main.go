@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
 
-	u "github.com/c-seeger/Golang-HTMLTOPDF-Converter"
+	u "github.com/c-seeger/Golang-HTML-TO-PDF-Converter"
 )
 
 func main() {
@@ -11,10 +12,10 @@ func main() {
 	r := u.NewRequestPdf("")
 
 	//html template path
-	templatePath := "templates/sample.html"
+	templatePath := "sample.html"
 
 	//path for download pdf
-	outputPath := "storage/example.pdf"
+	outputPath := "example.pdf"
 
 	//html template data
 	templateData := struct {
@@ -31,10 +32,11 @@ func main() {
 		Country:     "Germany",
 	}
 
-	if err := r.ParseTemplate(templatePath, templateData); err == nil {
-		ok, _ := r.GeneratePDF(outputPath)
-		fmt.Println(ok, "pdf generated successfully")
-	} else {
-		fmt.Println(err)
+	if err := r.ParseTemplate(templatePath, templateData); err != nil {
+		log.Fatal(err)
 	}
+	if err := r.GeneratePDF(outputPath); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("pdf generated successfully")
 }
