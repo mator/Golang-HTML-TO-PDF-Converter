@@ -11,7 +11,13 @@ import (
 
 //RequestPdf contains the html data
 type RequestPdf struct {
-	Body string
+	Body       string
+	localFiles bool
+}
+
+// LocalFileAccess enables or disables local file access
+func (r *RequestPdf) LocalFileAccess(b bool) {
+	r.localFiles = b
 }
 
 //NewRequestPdf creates a new RequestPdf from body
@@ -61,7 +67,11 @@ func (r *RequestPdf) GeneratePDF(pdfPath string) error {
 		return err
 	}
 
-	pdfg.AddPage(wkhtmltopdf.NewPageReader(f))
+	page := wkhtmltopdf.NewPageReader(f)
+	if r.localFiles {
+		page.EnableLocalFileAccess.Set(true)
+	}
+	pdfg.AddPage(page)
 	pdfg.PageSize.Set(wkhtmltopdf.PageSizeA4)
 	pdfg.Dpi.Set(300)
 
