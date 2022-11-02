@@ -44,7 +44,7 @@ func (r *RequestPdf) ParseTemplate(templateFileName string, data interface{}) er
 
 //GeneratePDF generates the pdf from the request
 func (r *RequestPdf) GeneratePDF(pdfPath string) error {
-	f, err := ioutil.TempFile(".", "html2pdf*.html")
+	f, err := ioutil.TempFile("", "html2pdf*.html")
 	if err != nil {
 		return err
 	}
